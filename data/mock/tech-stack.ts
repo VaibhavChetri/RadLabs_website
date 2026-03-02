@@ -1,0 +1,88 @@
+import { TechCategory } from '@/types';
+
+export const MOCK_TECH_STACK: readonly TechCategory[] = [
+    {
+        id: 'tch_001', slug: 'ai-ml', category: 'AI & ML',
+        technologies: [
+            { id: 'tech_001', name: 'Claude API', slug: 'claude-api', logoUrl: null, websiteUrl: 'https://anthropic.com' },
+            { id: 'tech_002', name: 'GPT-4', slug: 'gpt-4', logoUrl: null, websiteUrl: 'https://openai.com' },
+            { id: 'tech_003', name: 'LangChain', slug: 'langchain', logoUrl: null, websiteUrl: 'https://langchain.com' },
+            { id: 'tech_004', name: 'LlamaIndex', slug: 'llamaindex', logoUrl: null, websiteUrl: 'https://llamaindex.ai' },
+            { id: 'tech_005', name: 'Hugging Face', slug: 'hugging-face', logoUrl: null, websiteUrl: 'https://huggingface.co' },
+            { id: 'tech_006', name: 'PyTorch', slug: 'pytorch', logoUrl: null, websiteUrl: 'https://pytorch.org' },
+            { id: 'tech_007', name: 'TensorFlow', slug: 'tensorflow', logoUrl: null, websiteUrl: 'https://tensorflow.org' },
+            { id: 'tech_008', name: 'JAX', slug: 'jax', logoUrl: null, websiteUrl: 'https://jax.readthedocs.io' },
+            { id: 'tech_009', name: 'MLflow', slug: 'mlflow', logoUrl: null, websiteUrl: 'https://mlflow.org' },
+        ],
+        displayOrder: 1, isActive: true,
+        createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
+    },
+    {
+        id: 'tch_002', slug: 'cloud-infrastructure', category: 'Cloud & Infrastructure',
+        technologies: [
+            { id: 'tech_010', name: 'AWS SageMaker', slug: 'aws-sagemaker', logoUrl: null, websiteUrl: 'https://aws.amazon.com/sagemaker' },
+            { id: 'tech_011', name: 'AWS Lambda', slug: 'aws-lambda', logoUrl: null, websiteUrl: 'https://aws.amazon.com/lambda' },
+            { id: 'tech_012', name: 'Azure ML', slug: 'azure-ml', logoUrl: null, websiteUrl: 'https://azure.microsoft.com/services/machine-learning' },
+            { id: 'tech_013', name: 'GCP Vertex AI', slug: 'gcp-vertex-ai', logoUrl: null, websiteUrl: 'https://cloud.google.com/vertex-ai' },
+            { id: 'tech_014', name: 'Kubernetes', slug: 'kubernetes', logoUrl: null, websiteUrl: 'https://kubernetes.io' },
+            { id: 'tech_015', name: 'Docker', slug: 'docker', logoUrl: null, websiteUrl: 'https://docker.com' },
+            { id: 'tech_016', name: 'Terraform', slug: 'terraform', logoUrl: null, websiteUrl: 'https://terraform.io' },
+        ],
+        displayOrder: 2, isActive: true,
+        createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
+    },
+    {
+        id: 'tch_003', slug: 'data-analytics', category: 'Data & Analytics',
+        technologies: [
+            { id: 'tech_017', name: 'PostgreSQL', slug: 'postgresql', logoUrl: null, websiteUrl: 'https://postgresql.org' },
+            { id: 'tech_018', name: 'MongoDB', slug: 'mongodb', logoUrl: null, websiteUrl: 'https://mongodb.com' },
+            { id: 'tech_019', name: 'Snowflake', slug: 'snowflake', logoUrl: null, websiteUrl: 'https://snowflake.com' },
+            { id: 'tech_020', name: 'Apache Spark', slug: 'apache-spark', logoUrl: null, websiteUrl: 'https://spark.apache.org' },
+            { id: 'tech_021', name: 'Airflow', slug: 'airflow', logoUrl: null, websiteUrl: 'https://airflow.apache.org' },
+            { id: 'tech_022', name: 'dbt', slug: 'dbt', logoUrl: null, websiteUrl: 'https://getdbt.com' },
+            { id: 'tech_023', name: 'Kafka', slug: 'kafka', logoUrl: null, websiteUrl: 'https://kafka.apache.org' },
+            { id: 'tech_024', name: 'Redis', slug: 'redis', logoUrl: null, websiteUrl: 'https://redis.io' },
+        ],
+        displayOrder: 3, isActive: true,
+        createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
+    },
+    {
+        id: 'tch_004', slug: 'advanced-ml-ops', category: 'Advanced ML Ops',
+        technologies: [
+            { id: 'tech_025', name: 'Ray', slug: 'ray', logoUrl: null, websiteUrl: 'https://ray.io' },
+            { id: 'tech_026', name: 'Weights & Biases', slug: 'wandb', logoUrl: null, websiteUrl: 'https://wandb.ai' },
+            { id: 'tech_027', name: 'Kubeflow', slug: 'kubeflow', logoUrl: null, websiteUrl: 'https://kubeflow.org' },
+            { id: 'tech_028', name: 'Feature Store', slug: 'feature-store', logoUrl: null, websiteUrl: '#' },
+            { id: 'tech_029', name: 'Model Registry', slug: 'model-registry', logoUrl: null, websiteUrl: '#' },
+            { id: 'tech_030', name: 'A/B Testing Frameworks', slug: 'ab-testing', logoUrl: null, websiteUrl: '#' },
+        ],
+        displayOrder: 4, isActive: true,
+        createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
+    },
+    {
+        id: 'tch_005', slug: 'web-backend', category: 'Web & Backend',
+        technologies: [
+            { id: 'tech_031', name: 'FastAPI', slug: 'fastapi', logoUrl: null, websiteUrl: 'https://fastapi.tiangolo.com' },
+            { id: 'tech_032', name: 'Django', slug: 'django', logoUrl: null, websiteUrl: 'https://djangoproject.com' },
+            { id: 'tech_033', name: 'Node.js', slug: 'nodejs', logoUrl: null, websiteUrl: 'https://nodejs.org' },
+            { id: 'tech_034', name: 'Go', slug: 'go', logoUrl: null, websiteUrl: 'https://go.dev' },
+            { id: 'tech_035', name: 'Rust', slug: 'rust', logoUrl: null, websiteUrl: 'https://rust-lang.org' },
+            { id: 'tech_036', name: 'gRPC', slug: 'grpc', logoUrl: null, websiteUrl: 'https://grpc.io' },
+            { id: 'tech_037', name: 'GraphQL', slug: 'graphql', logoUrl: null, websiteUrl: 'https://graphql.org' },
+        ],
+        displayOrder: 5, isActive: true,
+        createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
+    },
+    {
+        id: 'tch_006', slug: 'observability-governance', category: 'Observability & Governance',
+        technologies: [
+            { id: 'tech_038', name: 'Datadog', slug: 'datadog', logoUrl: null, websiteUrl: 'https://datadoghq.com' },
+            { id: 'tech_039', name: 'New Relic', slug: 'new-relic', logoUrl: null, websiteUrl: 'https://newrelic.com' },
+            { id: 'tech_040', name: 'OpenTelemetry', slug: 'opentelemetry', logoUrl: null, websiteUrl: 'https://opentelemetry.io' },
+            { id: 'tech_041', name: 'Prometheus', slug: 'prometheus', logoUrl: null, websiteUrl: 'https://prometheus.io' },
+            { id: 'tech_042', name: 'ELK Stack', slug: 'elk-stack', logoUrl: null, websiteUrl: 'https://elastic.co/elk-stack' },
+        ],
+        displayOrder: 6, isActive: true,
+        createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
+    },
+] as const;

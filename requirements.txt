@@ -1,0 +1,56 @@
+# =========================================================================
+# PROJECT: RADLABS TECHNOLOGIES CORPORATE WEBSITE (2026 AI TECH STARTUP)
+# CORE IDENTITY: AI Partners. Limitless Vision. Inspiring Creativity.
+# =========================================================================
+
+# 1. VISUAL DESIGN & BRANDING
+# -------------------------------------------------------------------------
+- THEME: Advanced "Technical Mono" / Dark-Mode. Deep blacks/grays with neon red "Fire" accents (per logo).
+- AESTHETIC: High-contrast, premium typography with glow effects on CTAs and interactive elements.
+- LAYOUT: Modular Bento Grid system to organize service offerings and tech stacks clearly.
+- MOTION: Subtle "scrollytelling" for AI capabilities; liquid transitions between sections.
+
+# 2. CORE SITE STRUCTURE & PAGE REQUIREMENTS
+# -------------------------------------------------------------------------
+[HERO SECTION]
+- Headline: "Blending creativity, engineering & innovation to build intelligent solutions."
+- Promise: Evolve Faster, Operate Smarter, Stay Competitive, Built for Tomorrow.
+- Interactive Element: Live AI model demo or animated "Data Flow" visualization.
+
+[SERVICES - THE CORE FIVE]
+- AI Solutions: Custom ML models and intelligent automation.
+- Software Dev: AI-augmented, scalable software (Performance & Growth).
+- Web Dev: AI-powered websites delivered in a 24-hour turnaround.
+- Branding: AI-driven brand identities for modern differentiation.
+- AI Consulting: Strategic guidance to align digital investment with business outcomes.
+
+[CAPABILITIES & ARCHITECTURE]
+- Features: Custom AI Architecture, Data Pipelines, Logic Layers, Execution Mechanisms.
+- Advanced Systems: LLM Integration, RAG Systems, Agentic Workflows, AI Governance.
+
+[INDUSTRY SPECIALIZATIONS]
+- Finance (Analytics & Compliance), Healthcare (Diagnostics & Workflow), 
+  Retail (Personalization & Inventory), Startups (MVP & Growth Infrastructure).
+
+# 3. TECHNICAL SPECIFICATIONS (FOR THE DEVELOPER)
+# -------------------------------------------------------------------------
+- STACK: React/Next.js for performance; Tailwind CSS for rapid styling; GSAP for motion design.
+- PERFORMANCE: Optimized for <2.5s Largest Contentful Paint (LCP) to maximize 2026 conversion rates.
+- AI TOOLS (Tech Stack Integration): 
+    * API: Claude API, GPT-4, LangChain, LlamaIndex.
+    * ML Ops: Ray, MLflow, Weights & Biases.
+    * Cloud: AWS SageMaker, Azure ML, GCP Vertex AI.
+    * Backend: FastAPI, Django, Rust, Go.
+- GOVERNANCE: Visible controls for Model Governance and ELK Stack observability.
+
+# 4. CONVERSION & PROOF METRICS
+# -------------------------------------------------------------------------
+- Highlight: "40% Faster Time-to-Market" and "3x Operational Efficiency."
+- Trust Signal: "100% Production-Ready Delivery" (Enterprise standards).
+- CTA: Primary -> "Let's Build Something Remarkable"; Secondary -> "sales@radlabs.tech".
+
+# 5. CONTACT & GLOBAL REACH
+# -------------------------------------------------------------------------
+- URL: radlabs.tech
+- Global Availability: Headquarters mentioned as "Available Globally."
+- Lead Gen: AI-powered chatbot for 24/7 inquiry handling and appointment booking.
