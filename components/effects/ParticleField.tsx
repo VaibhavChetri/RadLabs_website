@@ -2,7 +2,6 @@
 
 import React, { useRef, useEffect } from 'react';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 interface Particle {
     x: number;
@@ -16,11 +15,10 @@ interface Particle {
 export function ParticleField() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const prefersReducedMotion = useReducedMotion();
-    const isMobile = useMediaQuery('(max-width: 768px)');
 
     useEffect(() => {
-        // Disabled on mobile or if reduced motion is preferred
-        if (prefersReducedMotion || isMobile || !canvasRef.current) return;
+        // Disabled only if reduced motion is preferred (but we now force this to false globally)
+        if (prefersReducedMotion || !canvasRef.current) return;
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -36,7 +34,7 @@ export function ParticleField() {
         };
 
         const initParticles = () => {
-            const particleCount = Math.floor(window.innerWidth / 50); // scales density based on width
+            const particleCount = Math.floor(window.innerWidth / 30); // increased density for all screens
             particles = [];
 
             for (let i = 0; i < particleCount; i++) {
@@ -107,9 +105,9 @@ export function ParticleField() {
             window.removeEventListener('resize', resizeCanvas);
             cancelAnimationFrame(animationFrameId);
         };
-    }, [prefersReducedMotion, isMobile]);
+    }, [prefersReducedMotion]);
 
-    if (prefersReducedMotion || isMobile) return null;
+    if (prefersReducedMotion) return null;
 
     return (
         <canvas

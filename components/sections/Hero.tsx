@@ -1,13 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MOCK_HERO_CONTENT } from '@/data/mock/navigation';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { Button } from '@/components/ui/Button';
-import { DraggableNode } from '../ui/DraggableNode';
-import { Database, Zap, ShieldAlert, GitBranch } from 'lucide-react';
+import { ParticleField } from '@/components/effects/ParticleField';
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
@@ -34,10 +33,10 @@ export function Hero() {
                 { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 2, ease: "expo.out" }
             );
 
-            // Hide the actual inner content temporarily while we drop in
+            // Hide the actual inner content temporarily while we drop in with a creative 3D tilt
             gsap.fromTo(contentInnerRef.current,
-                { opacity: 0, y: 50 },
-                { opacity: 1, y: 0, delay: 0.8, duration: 1.5, ease: "power3.out" }
+                { opacity: 0, y: 100, scale: 0.9, rotationX: -15, filter: 'blur(20px)' },
+                { opacity: 1, y: 0, scale: 1, rotationX: 0, filter: 'blur(0px)', delay: 1.2, duration: 1.8, ease: "expo.out" }
             );
 
             // Pin the hero and scale the massive text incredibly huge until we "fall through" it
@@ -52,14 +51,22 @@ export function Hero() {
                 }
             });
 
-            // The scale math (Scale up to safe threshold, pan into the 'O')
+            // Calculate responsive scale and positioning
+            const isMobile = window.innerWidth < 768;
+            const targetScale = isMobile ? 150 : 200;
+            // Increase targetX to push the text further right, centering the "A" of "AI" on the screen
+            const targetX = isMobile ? 22 : 23;
+            // Fine-tune vertical position to hit the crossbar/hole of the "A"
+            const targetY = isMobile ? 5 : 4;
+
+            // The scale math (Scale up and pan into the triangular counter/hole inside the 'A')
             tl.to(zoomTextRef.current, {
-                scale: 60, // Large enough to zoom through
-                xPercent: -300,
-                yPercent: 80,
+                scale: targetScale,
+                xPercent: targetX,
+                yPercent: targetY,
                 transformOrigin: "center center",
                 force3D: false, // CRITICAL: false prevents Massive VRAM texture crashes which cause ghosting
-                ease: "power2.in",
+                ease: "power2.inOut",
                 duration: 1
             }, 0);
 
@@ -87,10 +94,6 @@ export function Hero() {
         return () => ctx.revert();
     }, [prefersReducedMotion]);
 
-    // Handle floating node positioning state (client-side only to prevent hydration mismatch errors)
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
-
     return (
         <section
             ref={containerRef}
@@ -104,6 +107,7 @@ export function Hero() {
             >
                 {/* Wacky grid and radial gradients simulating an AI neural core */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(50,0,0,0.8)_0%,#000000_60%)]" />
+                <ParticleField />
                 <div
                     className="absolute inset-[-100%] opacity-20 pointer-events-none"
                     style={{
@@ -121,61 +125,36 @@ export function Hero() {
             >
                 {/* Massive bold font for the mask */}
                 <div ref={zoomTextInnerRef} className="text-[12vw] leading-none font-bold tracking-tighter text-white font-sans text-center whitespace-nowrap flex flex-col uppercase opacity-90">
-                    <span className="text-[var(--color-fire-neon)]">NEURAL</span>
-                    <span>INNOVATION</span>
-                    <span className="text-[var(--color-text-secondary)] italic font-serif lowercase mt-[-2vw]">Engine</span>
+                    <span className="text-[var(--color-fire-neon)] -translate-y-8 md:translate-y-0">BESPOKE</span>
+                    <span className="mt-[12vh] md:mt-[4vw]">AI</span>
+                    <span className="text-[var(--color-text-secondary)] italic font-serif lowercase mt-[-2vw]">Solutions</span>
                 </div>
             </div>
 
             {/* Draggable Nodes & Standard UI Interface (These disappear as we zoom) */}
-            <div ref={contentHiderRef} className="absolute inset-0 z-20 pointer-events-none">
+            <div ref={contentHiderRef} className="absolute inset-0 z-20 pointer-events-none perspective-1000">
                 <div ref={contentInnerRef} className="absolute inset-0">
-                    {/* Center align standard CTA box so the user has immediate primary actions */}
-                    <div className="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-auto">
-                        <p className="max-w-xl text-center text-white/70 mb-8 font-mono text-sm uppercase tracking-widest backdrop-blur-md p-4 bg-black/40 rounded-xl border border-white/10">
-                            {MOCK_HERO_CONTENT.headline.replace(/\n/g, ' ')}
-                        </p>
 
-                        <div className="flex flex-col sm:flex-row gap-6 items-center group">
-                            <div className="absolute inset-0 bg-[var(--color-fire-neon)] opacity-0 group-hover:opacity-20 blur-3xl transition-opacity duration-1000" />
-                            <Button cta={MOCK_HERO_CONTENT.primaryCta} className="shadow-[0_0_20px_rgba(255,51,51,0.4)] scale-110 !px-8" />
-                        </div>
+                    {/* Position standard CTA text above the AI, completely transparent and visible via difference blend */}
+                    <div className="absolute top-[20%] md:top-[30%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl px-4 z-50 mix-blend-difference pointer-events-auto">
+                        <p className="w-full text-center text-white font-mono text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.3em] font-bold leading-relaxed">
+                            BLENDING CREATIVITY, ENGINEERING & INNOVATION TO BUILD<br />
+                            INTELLIGENT AI SOLUTIONS.
+                        </p>
                     </div>
 
-                    {/* Physics Interactive Draggable Nodes - Only render on client to safely use window coords */}
-                    {mounted && (
-                        <div className="pointer-events-auto">
-                            <DraggableNode
-                                id="n1" title="Data Ingestion"
-                                description="Real-time multi-channel unstructured data pipeline."
-                                icon={<Database />}
-                                initialPosition={{ x: window.innerWidth * 0.1, y: window.innerHeight * 0.2 }}
-                            />
-                            <DraggableNode
-                                id="n2" title="Logic Gateway"
-                                description="A/B routing protocol for transformer models."
-                                icon={<GitBranch />}
-                                initialPosition={{ x: window.innerWidth * 0.7, y: window.innerHeight * 0.15 }}
-                            />
-                            <DraggableNode
-                                id="n3" title="Execution Engine"
-                                description="Automated business logic triggering and API firing."
-                                icon={<Zap />}
-                                initialPosition={{ x: window.innerWidth * 0.75, y: window.innerHeight * 0.7 }}
-                            />
-                            <DraggableNode
-                                id="n4" title="Governance"
-                                description="Safety railguards and token-limit enforcement."
-                                icon={<ShieldAlert />}
-                                initialPosition={{ x: window.innerWidth * 0.15, y: window.innerHeight * 0.75 }}
-                            />
+                    {/* The call to action button stays below the massive AI text */}
+                    <div className="absolute bottom-[10%] md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-auto z-40">
+                        <div className="flex flex-col sm:flex-row gap-4 md:gap-6 items-center group relative">
+                            <div className="absolute inset-0 bg-[var(--color-fire-neon)] opacity-0 group-hover:opacity-30 blur-3xl transition-opacity duration-1000" />
+                            <Button cta={MOCK_HERO_CONTENT.primaryCta} className="shadow-[0_0_20px_rgba(255,51,51,0.4)] scale-90 md:scale-110 !px-6 md:!px-10 py-3 md:py-4 text-[10px] md:text-sm font-bold tracking-[0.1em] hover:scale-105 md:hover:scale-125 transition-transform duration-500" />
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
 
             {/* Scroll Indicator Box */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 pointer-events-none">
+            <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 pointer-events-none">
                 <span className="font-mono text-[10px] text-[var(--color-fire-neon)] tracking-[0.3em] mb-4">DRAG NODES / SCROLL DEEP</span>
                 <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-1/2 bg-[var(--color-fire-neon)] animate-[verticalScan_2s_ease-in-out_infinite]" />

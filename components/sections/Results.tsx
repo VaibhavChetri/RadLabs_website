@@ -12,34 +12,22 @@ export async function Results() {
             <div className="max-w-[1920px] mx-auto flex flex-col lg:flex-row min-h-screen">
 
                 {/* Left Side: Sticky Image / Atmosphere (40%) */}
-                <div className="w-full lg:w-5/12 hidden lg:block relative border-r border-[var(--color-border-subtle)]">
-                    <div className="sticky top-0 h-screen w-full overflow-hidden">
+                <div className="w-full lg:w-5/12 relative border-b lg:border-b-0 lg:border-r border-[var(--color-border-subtle)]">
+                    <div className="sticky top-0 h-[50svh] lg:h-screen w-full overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-brand-black)] via-transparent to-[var(--color-brand-black)] z-10" />
                         <div className="absolute inset-0 bg-[var(--color-fire-deep)] mix-blend-multiply opacity-60 z-10" />
 
                         {/* The background visual */}
                         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--color-fire-neon)_0%,transparent_70%)] opacity-20" />
 
-                        {/* Contextual overlay text */}
-                        <div className="absolute bottom-24 left-16 z-20 max-w-sm">
-                            <div className="font-mono text-sm tracking-[0.2em] text-[var(--color-fire-neon)] font-bold mb-4">
-                                [ 07 — OUTCOMES ]
-                            </div>
-                            <h2 className="text-4xl font-serif text-white">What Our Clients<br />Experience</h2>
+                        <div className="absolute top-1/2 -translate-y-1/2 left-8 lg:left-16 z-20 max-w-sm">
+                            <h2 className="text-3xl md:text-4xl font-serif text-white">What Our Clients<br />Experience</h2>
                         </div>
                     </div>
                 </div>
 
                 {/* Right Side: Scrollable Metrics Content (60%) */}
                 <div className="w-full lg:w-7/12 py-32 px-8 lg:px-24 flex flex-col justify-center">
-
-                    {/* Mobile Header (Hidden on Desktop) */}
-                    <div className="lg:hidden mb-24">
-                        <div className="font-mono text-sm tracking-[0.2em] text-[var(--color-fire-neon)] font-bold mb-4">
-                            [ 07 — OUTCOMES ]
-                        </div>
-                        <h2 className="text-4xl font-serif text-white">What Our Clients Experience</h2>
-                    </div>
 
                     <div className="space-y-32">
                         {metrics.map((metric) => (

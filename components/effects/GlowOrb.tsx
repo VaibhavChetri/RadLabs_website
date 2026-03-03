@@ -30,46 +30,92 @@ export function GlowOrb() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
-            const maxRadius = Math.min(centerX, centerY) * 0.8;
+            const maxRadius = Math.min(centerX, centerY) * 0.85;
 
-            // Draw flowing data streams
-            for (let i = 0; i < 5; i++) {
-                const radius = maxRadius - (i * 25);
-                if (radius <= 0) continue;
+            // 7 Rings of Chakravyuha (Labyrinth)
+            for (let i = 1; i <= 7; i++) {
+                const r = maxRadius * (i / 7);
+                if (r <= 0) continue;
 
                 ctx.beginPath();
-                ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+                // Broken arcs to simulate a complex labyrinth
+                const dashLength = Math.PI * r * 0.25;
+                const gapLength = Math.PI * r * 0.05;
+                ctx.setLineDash([dashLength, gapLength]);
+                // Alternate rotation directions for each ring
+                ctx.lineDashOffset = angle * (i % 2 === 0 ? 1 : -1) * 30;
+                ctx.arc(centerX, centerY, r, 0, Math.PI * 2);
 
-                // Gradient stroke
-                const gradient = ctx.createLinearGradient(
-                    centerX + Math.cos(angle + i) * radius,
-                    centerY + Math.sin(angle + i) * radius,
-                    centerX - Math.cos(angle + i) * radius,
-                    centerY - Math.sin(angle + i) * radius
-                );
-
-                gradient.addColorStop(0, 'rgba(255, 51, 51, 0.8)'); // Neon Red
-                gradient.addColorStop(0.5, 'rgba(255, 51, 51, 0.1)');
-                gradient.addColorStop(1, 'transparent');
-
-                ctx.strokeStyle = gradient;
-                ctx.lineWidth = 2 + (i * 0.5);
+                // Color gets brighter and more red towards the center
+                const alpha = 0.5 - (i * 0.05);
+                ctx.strokeStyle = `rgba(255, 51, 51, ${alpha})`;
+                ctx.lineWidth = 1 + (7 - i) * 0.3;
                 ctx.stroke();
-
-                // Draw data 'packets' (small dots on the rings)
-                const dotAngle = angle * (i % 2 === 0 ? 1.5 : -2) + i * 45;
-                const dotX = centerX + Math.cos(dotAngle) * radius;
-                const dotY = centerY + Math.sin(dotAngle) * radius;
-
-                ctx.beginPath();
-                ctx.arc(dotX, dotY, 3, 0, Math.PI * 2);
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fill();
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#FF3333';
             }
+            ctx.setLineDash([]); // Reset dash for nodes
 
-            ctx.shadowBlur = 0; // reset
+            // Define the three integrated systems: Data (Outer), Logic (Middle), AI (Core)
+            const systems = [
+                { label: 'DATA', level: 7, speedMultiplier: 0.8, color: '#A0A0A0' }, // Outer ring
+                { label: 'LOGIC', level: 4, speedMultiplier: -1.2, color: '#FFFFFF' }, // Middle ring
+                { label: 'AI', level: 1.5, speedMultiplier: 1.5, color: '#FF3333' }, // Inner core
+            ];
+
+            // Calculate current orbital positions
+            const positions = systems.map((sys, idx) => {
+                const r = maxRadius * (sys.level / 7);
+                // Offset angles so they aren't clumped together initially
+                const orbitalAngle = (angle * sys.speedMultiplier) + (idx * Math.PI * 0.6);
+                return {
+                    x: centerX + Math.cos(orbitalAngle) * r,
+                    y: centerY + Math.sin(orbitalAngle) * r,
+                    ...sys
+                };
+            });
+
+            // Draw integration connection lines between Data -> Logic -> AI
+            ctx.beginPath();
+            ctx.moveTo(positions[0].x, positions[0].y); // Data
+            ctx.lineTo(positions[1].x, positions[1].y); // Logic
+            ctx.lineTo(positions[2].x, positions[2].y); // AI
+
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Draw glowing data packets traveling along the connection lines
+            const travelProgress = (angle * 2) % 1; // 0 to 1 loop
+            const lerp = (start: number, end: number, t: number) => start + (end - start) * t;
+
+            // Packet from Data to Logic
+            ctx.beginPath();
+            ctx.arc(lerp(positions[0].x, positions[1].x, travelProgress), lerp(positions[0].y, positions[1].y, travelProgress), 2, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFFFFF';
+            // Packet from Logic to AI
+            ctx.arc(lerp(positions[1].x, positions[2].x, travelProgress), lerp(positions[1].y, positions[2].y, travelProgress), 2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw the System Nodes and Labels
+            positions.forEach((pos) => {
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = pos.color;
+
+                // Glowing Node
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = pos.color;
+                ctx.fill();
+
+                // Typography
+                ctx.font = 'bold 11px monospace';
+                ctx.fillStyle = pos.color;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(pos.label, pos.x, pos.y - 12); // Label above the dot
+
+                ctx.shadowBlur = 0; // Reset shadow
+            });
+
             angle += 0.01;
             animationFrameId = requestAnimationFrame(drawOrb);
         };

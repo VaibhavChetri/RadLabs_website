@@ -1,9 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { MOCK_COMPANY_INFO } from '@/data/mock/company';
+import { Linkedin, Twitter, Instagram } from 'lucide-react';
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
+
+    // Map platform names to lucide icons
+    const getSocialIcon = (platform: string) => {
+        switch (platform.toLowerCase()) {
+            case 'linkedin': return <Linkedin className="w-6 h-6" />;
+            case 'twitter': return <Twitter className="w-6 h-6" />;
+            case 'instagram': return <Instagram className="w-6 h-6" />;
+            default: return null;
+        }
+    };
 
     return (
         <footer className="w-full bg-[var(--color-bg-elevated)] border-t border-[var(--color-border-subtle)] text-[#888888] py-16 px-8 lg:px-16" role="contentinfo">
@@ -36,19 +47,17 @@ export function Footer() {
                 {/* Legal & Socials (Span 3) */}
                 <div className="md:col-span-3 flex flex-col">
                     <h4 className="font-mono text-[10px] tracking-widest text-[#555555] uppercase mb-6">Connect</h4>
-                    <div className="flex flex-col space-y-4 mb-12">
+                    <div className="flex flex-row space-x-6 mb-12">
                         {MOCK_COMPANY_INFO.socialLinks.map((social) => (
                             <a
                                 key={social.id}
                                 href={social.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sm hover:text-[var(--color-fire-neon)] transition-colors duration-300 flex items-center gap-2"
+                                className="text-white hover:text-[var(--color-fire-neon)] hover:scale-110 transition-all duration-300 flex items-center justify-center p-2 rounded-full border border-white/10 hover:border-[var(--color-fire-neon)]/50"
+                                aria-label={social.platform}
                             >
-                                {social.platform}
-                                <svg className="w-3 h-3 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
+                                {getSocialIcon(social.platform)}
                             </a>
                         ))}
                     </div>

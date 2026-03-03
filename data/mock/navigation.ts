@@ -11,7 +11,7 @@ export const MOCK_NAVIGATION: readonly NavLink[] = [
 
 export const MOCK_HERO_CONTENT: HeroContent = {
     preHeadline: '[ AI PARTNERS. LIMITLESS VISION. ]',
-    headline: 'Blending creativity,\nengineering & innovation\nto build intelligent solutions.',
+    headline: 'Blending creativity,\nengineering & innovation\nto build intelligent AI solutions.',
     highlightWords: ['creativity', 'engineering', 'innovation'],
     pills: [
         'Evolve Faster',

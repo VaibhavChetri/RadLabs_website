@@ -21,7 +21,7 @@ export const MOCK_METRICS: readonly MetricItem[] = [
         id: 'mtr_003', slug: 'production-ready',
         value: '100%', numericValue: 100, suffix: '%',
         label: 'Production-Ready Delivery',
-        description: 'Every system we ship is built to enterprise standards — secure, governed, and maintainable. No prototypes that become production.',
+        description: 'Every system we ship is built to bespoke standards — secure, governed, and maintainable. No prototypes that become production.',
         displayOrder: 3, isActive: true,
         createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-02-10T00:00:00Z',
     },

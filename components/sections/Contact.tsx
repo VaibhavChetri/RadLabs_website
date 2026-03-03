@@ -43,7 +43,7 @@ export function Contact() {
                 </ContactClient>
 
                 {/* Contact Info Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 relative z-10 max-w-5xl mx-auto border-t border-white/10 pt-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-32 relative z-10 max-w-5xl mx-auto border-t border-white/10 pt-16">
                     {MOCK_CONTACT_ITEMS.map((item) => (
                         <div key={item.id} className="flex flex-col items-center md:items-start text-center md:text-left">
                             <h4 className="font-mono text-[10px] md:text-xs text-[var(--color-text-muted)] tracking-widest uppercase mb-3">

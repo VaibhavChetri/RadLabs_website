@@ -5,41 +5,37 @@ import { gsap } from 'gsap';
 import { useScrollTrigger } from '@/hooks/useScrollTrigger';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-export function CapabilitiesClient({ children }: { children: ReactNode }) {
+export function SocialProofClient({ children }: { children: ReactNode }) {
     const containerRef = useRef<HTMLDivElement>(null);
-    const textColumnRef = useRef<HTMLDivElement>(null);
     const prefersReducedMotion = useReducedMotion();
 
-    // The Data Terminal reveal effect
     useScrollTrigger(containerRef, undefined, {
         onEnter: () => {
             if (prefersReducedMotion || !containerRef.current) return;
 
-            const items = containerRef.current.querySelectorAll('.capability-item');
-
-            gsap.fromTo(items,
+            // The Laser Reveal effect
+            gsap.fromTo(containerRef.current,
                 {
                     opacity: 0,
-                    x: -30,
-                    filter: 'blur(10px)'
+                    filter: 'brightness(3) blur(10px)',
+                    y: 20
                 },
                 {
                     opacity: 1,
-                    x: 0,
-                    filter: 'blur(0px)',
-                    duration: 0.8,
-                    stagger: 0.15,
-                    ease: 'power3.out',
+                    filter: 'brightness(1) blur(0px)',
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power4.out',
                     overwrite: "auto"
                 }
             );
         },
         once: true,
-        start: "top 70%"
+        start: "top 85%"
     });
 
     return (
-        <div ref={containerRef} className="w-full flex flex-col md:flex-row gap-16 md:gap-24 relative">
+        <div ref={containerRef} className="opacity-0 w-full relative">
             {children}
         </div>
     );

@@ -1,6 +1,7 @@
 import { getMockCapabilities } from '@/data/adapters';
 import { SectionHeader } from '@/components/ui/SectionHeader';
-import { FeatureBadge } from '@/components/ui/FeatureBadge';
+import { CoreServiceCard } from '@/components/ui/CoreServiceCard';
+import { CoreServicesGrid } from '@/components/ui/CoreServicesGrid';
 import { GlowOrb } from '@/components/effects/GlowOrb';
 import { CapabilitiesClient } from './CapabilitiesClient';
 import { MOCK_FEATURE_BADGES } from '@/data/mock/capabilities';
@@ -48,11 +49,18 @@ export async function Capabilities() {
                     </div>
                 </CapabilitiesClient>
 
-                {/* Bottom Row: Feature Badges */}
-                <div className="mt-24 pt-12 border-t border-[var(--color-border-subtle)] flex flex-wrap gap-4 justify-center md:justify-start">
-                    {MOCK_FEATURE_BADGES.map((badge) => (
-                        <FeatureBadge key={badge.id} label={badge.label} iconName={badge.icon} />
-                    ))}
+                {/* Bottom Row: Core Service Diagram Cards */}
+                <div className="mt-24 pt-16 border-t border-[var(--color-border-subtle)]">
+                    <CoreServicesGrid>
+                        {MOCK_FEATURE_BADGES.map((badge, idx) => (
+                            <CoreServiceCard
+                                key={badge.id}
+                                index={idx}
+                                label={badge.label}
+                                iconName={badge.icon}
+                            />
+                        ))}
+                    </CoreServicesGrid>
                 </div>
 
             </div>

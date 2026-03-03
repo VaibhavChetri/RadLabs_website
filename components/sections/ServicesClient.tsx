@@ -13,30 +13,46 @@ export function ServicesClient({ children }: { children: ReactNode }) {
         onEnter: () => {
             if (prefersReducedMotion || !gridRef.current) return;
 
-            const cards = gridRef.current.querySelectorAll('.bento-card');
-
-            gsap.fromTo(cards,
+            // The Dashboard Landing effect
+            gsap.fromTo(gridRef.current,
                 {
                     opacity: 0,
-                    y: 50,
-                    scale: 0.95
+                    rotationX: 15,
+                    y: 100,
+                    scale: 0.95,
+                    transformPerspective: 1000
                 },
                 {
                     opacity: 1,
+                    rotationX: 0,
                     y: 0,
                     scale: 1,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    ease: 'power3.out',
+                    duration: 1.2,
+                    ease: 'expo.out',
                     overwrite: "auto"
                 }
             );
+
+            // Stagger the individual cards slightly after the container starts moving
+            const cards = gridRef.current.querySelectorAll('.bento-card');
+            gsap.fromTo(cards,
+                { opacity: 0, y: 30 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    stagger: 0.1,
+                    ease: 'power3.out',
+                    delay: 0.2
+                }
+            );
         },
-        once: true // only animate in once
+        once: true,
+        start: "top 80%"
     });
 
     return (
-        <div ref={gridRef} className="w-full">
+        <div ref={gridRef} className="w-full opacity-0" style={{ transformStyle: 'preserve-3d' }}>
             {children}
         </div>
     );

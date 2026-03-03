@@ -1,5 +1,6 @@
 import { Marquee } from '@/components/ui/Marquee';
 import { getMockSocialProof, adaptSocialProof } from '@/data/adapters';
+import { SocialProofClient } from './SocialProofClient';
 import { use } from 'react';
 
 export function SocialProof() {
@@ -17,18 +18,23 @@ async function SocialProofAsync() {
     return (
         <section
             id="social-proof"
-            className="w-full py-6 border-y border-[var(--color-border-subtle)] bg-[#0A0A0A]"
+            className="w-full py-6 relative z-50 overflow-hidden mix-blend-difference"
         >
-            <Marquee speed={40} pauseOnHover>
-                {items.map((item, index) => (
-                    <div key={item.id} className="flex items-center space-x-12">
-                        <span className="font-mono text-sm tracking-widest text-[var(--color-text-muted)] uppercase">
-                            {item.text}
-                        </span>
-                        <span className="text-[var(--color-fire-neon)] text-xs">◆</span>
-                    </div>
-                ))}
-            </Marquee>
+            <SocialProofClient>
+                {/* Extremely subtle hairline top/bottom borders that won't ruin the inversion */}
+                <div className="absolute inset-x-0 top-0 h-[1px] bg-white/10" />
+                <div className="absolute inset-x-0 bottom-0 h-[1px] bg-white/10" />
+                <Marquee speed={40} pauseOnHover>
+                    {items.map((item, index) => (
+                        <div key={item.id} className="flex items-center space-x-12">
+                            <span className="font-mono text-sm tracking-widest text-white uppercase">
+                                {item.text}
+                            </span>
+                            <span className="text-[var(--color-fire-neon)] text-xs">◆</span>
+                        </div>
+                    ))}
+                </Marquee>
+            </SocialProofClient>
         </section>
     );
 }

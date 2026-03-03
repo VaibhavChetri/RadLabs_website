@@ -12,13 +12,12 @@ export const MOCK_COMPANY_INFO: CompanyInfo = {
     socialLinks: [
         { id: 'soc_001', platform: 'LinkedIn', url: 'https://linkedin.com/company/radlabs', icon: 'linkedin' },
         { id: 'soc_002', platform: 'Twitter', url: 'https://twitter.com/radlabs_tech', icon: 'twitter' },
-        { id: 'soc_003', platform: 'GitHub', url: 'https://github.com/radlabs', icon: 'github' },
+        { id: 'soc_003', platform: 'Instagram', url: 'https://instagram.com/radlabs', icon: 'instagram' },
     ],
     copyright: '© 2026 Radlabs Technologies. All rights reserved.',
 };
 
 export const MOCK_CONTACT_ITEMS: readonly ContactInfo[] = [
-    { id: 'cnt_001', type: 'website', label: 'Website', value: 'radlabs.tech', href: 'https://radlabs.tech', displayOrder: 1 },
     { id: 'cnt_002', type: 'email', label: 'Email', value: 'sales@radlabs.tech', href: 'mailto:sales@radlabs.tech', displayOrder: 2 },
     { id: 'cnt_003', type: 'phone', label: 'Phone', value: '+91 690-126-1005', href: 'tel:+916901261005', displayOrder: 3 },
     { id: 'cnt_004', type: 'phone', label: 'Phone', value: '+91 863-870-2710', href: 'tel:+918638702710', displayOrder: 4 },

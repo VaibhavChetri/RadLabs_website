@@ -34,24 +34,24 @@ export function IndustryCard({ industry, index, className }: IndustryCardProps) 
                     className="w-full h-full bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105 saturate-0 contrast-125 opacity-30 group-hover:opacity-100"
                     style={{ backgroundImage: `url(${industry.imageUrl})` }}
                 />
-                {/* Red Overlay on Hover */}
+                {/* Always-on dark gradient for legibility, with a red overlay on hover */}
                 <div className="absolute inset-0 bg-[var(--color-fire-core)]/40 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#0A0A0A]/90 to-[#0A0A0A]/40" />
             </div>
 
             {/* Content */}
-            <div className="relative z-10 h-full flex flex-col p-8 md:p-10 justify-end transform transition-transform duration-500 group-hover:-translate-y-4">
+            <div className="relative z-10 h-full flex flex-col p-8 md:p-10 justify-end">
 
                 <div className="w-12 h-12 mb-6 border border-white/10 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-500">
                     <Icon className="w-5 h-5 text-white group-hover:text-[var(--color-fire-neon)] transition-colors" />
                 </div>
 
-                <h3 className="font-serif text-2xl md:text-3xl text-white mb-4">
+                <h3 className="font-serif text-2xl md:text-3xl text-white mb-4 group-hover:text-[var(--color-fire-neon)] transition-colors">
                     {industry.title}
                 </h3>
 
-                {/* The description is hidden until hover via opacity/transform */}
-                <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed max-w-sm h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+                {/* The description is now permanently visible for better UX */}
+                <p className="text-[var(--color-text-secondary)] group-hover:text-white text-sm md:text-base leading-relaxed max-w-sm transition-colors duration-300">
                     {industry.description}
                 </p>
 

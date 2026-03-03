@@ -3,19 +3,8 @@
 import { useState, useEffect } from 'react';
 
 export function useReducedMotion() {
-    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        setPrefersReducedMotion(mediaQuery.matches);
-
-        const listener = (event: MediaQueryListEvent) => {
-            setPrefersReducedMotion(event.matches);
-        };
-
-        mediaQuery.addEventListener('change', listener);
-        return () => mediaQuery.removeEventListener('change', listener);
-    }, []);
-
-    return prefersReducedMotion;
+    // The user explicitly requested animations on all devices.
+    // We are deliberately ignoring window.matchMedia('(prefers-reduced-motion: reduce)') 
+    // to bypass low-power-mode restrictions on mobile devices.
+    return false;
 }

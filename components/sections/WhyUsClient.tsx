@@ -1,44 +1,100 @@
 'use client';
 
-import { useRef, ReactNode, useEffect } from 'react';
+import { useRef, ReactNode, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { useScrollTrigger } from '@/hooks/useScrollTrigger';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+
+if (typeof window !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
 
 export function WhyUsClient({ children }: { children: ReactNode }) {
     const triggerRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const prefersReducedMotion = useReducedMotion();
+    const [hasRevealed, setHasRevealed] = useState(false);
 
-    // GSAP Scroll Reveal
-    useScrollTrigger(triggerRef, undefined, {
-        onEnter: () => {
-            if (prefersReducedMotion || !containerRef.current) return;
-            const cards = containerRef.current.querySelectorAll('.why-card');
-            gsap.fromTo(cards,
-                { opacity: 0, y: 120, rotationX: 15, scale: 0.9 },
-                { opacity: 1, y: 0, rotationX: 0, scale: 1, duration: 1.2, stagger: 0.2, ease: 'expo.out', overwrite: "auto" }
-            );
-        },
-        once: true
-    });
+    // GSAP Scroll Reveal with fallback
+    useEffect(() => {
+        if (prefersReducedMotion || !containerRef.current || !triggerRef.current) return;
 
-    // 3D Hover Tilt effect
+        const cards = containerRef.current.querySelectorAll('.why-card');
+
+        // Set initial state
+        gsap.set(cards, { opacity: 0, y: 120, rotationX: 15, scale: 0.9 });
+
+        // Refresh ScrollTrigger to recalculate positions (important after Process pin release)
+        ScrollTrigger.refresh();
+
+        const revealCards = () => {
+            if (hasRevealed) return;
+            setHasRevealed(true);
+            gsap.to(cards, {
+                opacity: 1, y: 0, rotationX: 0, scale: 1,
+                duration: 1.2, stagger: 0.2, ease: 'expo.out', overwrite: "auto"
+            });
+        };
+
+        // Primary: ScrollTrigger-based reveal
+        const st = ScrollTrigger.create({
+            trigger: triggerRef.current,
+            start: 'top 90%',
+            once: true,
+            onEnter: revealCards
+        });
+
+        // Fallback: IntersectionObserver as a safety net
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        revealCards();
+                        observer.disconnect();
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: '0px 0px 100px 0px' }
+        );
+
+        if (triggerRef.current) {
+            observer.observe(triggerRef.current);
+        }
+
+        // Final fallback: timeout after 4s (in case both triggers fail)
+        const fallbackTimeout = setTimeout(() => {
+            if (!hasRevealed) {
+                revealCards();
+            }
+        }, 4000);
+
+        return () => {
+            st.kill();
+            observer.disconnect();
+            clearTimeout(fallbackTimeout);
+        };
+    }, [prefersReducedMotion, hasRevealed]);
+
+    // 3D Hover Tilt effect (desktop only, skip on touch)
     useEffect(() => {
         if (prefersReducedMotion || !containerRef.current) return;
+
+        // Skip tilt on touch devices
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (isTouch) return;
 
         const cards = containerRef.current.querySelectorAll('.why-card');
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleMouseMove = (e: MouseEvent, card: any) => {
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left; // x position within the element.
-            const y = e.clientY - rect.top;  // y position within the element.
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
 
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -12; // Max rotation 12deg
+            const rotateX = ((y - centerY) / centerY) * -12;
             const rotateY = ((x - centerX) / centerX) * 12;
 
             const inner = card.querySelector('.why-card-inner');
@@ -71,7 +127,7 @@ export function WhyUsClient({ children }: { children: ReactNode }) {
                 gsap.to(inner, {
                     rotationX: 0,
                     rotationY: 0,
-                    ease: 'elastic.out(1, 0.4)', // bouncy return
+                    ease: 'elastic.out(1, 0.4)',
                     duration: 1.5
                 });
             }
@@ -84,7 +140,6 @@ export function WhyUsClient({ children }: { children: ReactNode }) {
             card.addEventListener('mousemove', onMove);
             card.addEventListener('mouseleave', onLeave);
 
-            // attach teardown to element for cleanup
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (card as any)._cleanup = () => {
                 card.removeEventListener('mousemove', onMove);
