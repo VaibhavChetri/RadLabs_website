@@ -1,7 +1,6 @@
 import {
     ServiceItem,
     CapabilityItem,
-    IndustryItem,
     TechCategory,
     MetricItem,
     ProcessStep,
@@ -13,7 +12,6 @@ import { ApiResponse } from '@/types/api';
 import {
     MOCK_SERVICES,
     MOCK_CAPABILITIES,
-    MOCK_INDUSTRIES,
     MOCK_TECH_STACK,
     MOCK_METRICS,
     MOCK_PROCESS_STEPS,
@@ -47,11 +45,6 @@ export function adaptValueProps(response: ApiResponse<readonly ValueProposition[
         .sort((a, b) => a.displayOrder - b.displayOrder);
 }
 
-export function adaptIndustries(response: ApiResponse<readonly IndustryItem[]>): IndustryItem[] {
-    return [...response.data]
-        .filter((i) => i.isActive)
-        .sort((a, b) => a.displayOrder - b.displayOrder);
-}
 
 export function adaptTechStack(response: ApiResponse<readonly TechCategory[]>): TechCategory[] {
     return [...response.data]
@@ -100,9 +93,6 @@ export async function getMockValueProps(): Promise<ApiResponse<readonly ValuePro
     return createMockResponse(MOCK_VALUE_PROPS);
 }
 
-export async function getMockIndustries(): Promise<ApiResponse<readonly IndustryItem[]>> {
-    return createMockResponse(MOCK_INDUSTRIES);
-}
 
 export async function getMockTechStack(): Promise<ApiResponse<readonly TechCategory[]>> {
     return createMockResponse(MOCK_TECH_STACK);

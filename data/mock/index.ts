@@ -1,7 +1,6 @@
 export * from './services';
 export * from './capabilities';
 export * from './process';
-export * from './industries';
 export * from './tech-stack';
 export * from './metrics';
 export * from './navigation';

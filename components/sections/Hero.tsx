@@ -98,7 +98,7 @@ export function Hero() {
         <section
             ref={containerRef}
             id="hero"
-            className="relative w-full h-[100svh] flex items-center justify-center overflow-hidden bg-black"
+            className="relative w-full h-[100svh] flex items-center justify-center overflow-hidden bg-black touch-pan-y"
         >
             {/* The deep background we see BEFORE zooming through */}
             <div
@@ -153,13 +153,6 @@ export function Hero() {
                 </div>
             </div>
 
-            {/* Scroll Indicator Box */}
-            <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 pointer-events-none">
-                <span className="font-mono text-[10px] text-[var(--color-fire-neon)] tracking-[0.3em] mb-4">DRAG NODES / SCROLL DEEP</span>
-                <div className="w-[1px] h-12 bg-white/20 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1/2 bg-[var(--color-fire-neon)] animate-[verticalScan_2s_ease-in-out_infinite]" />
-                </div>
-            </div>
 
         </section>
     );

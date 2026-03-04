@@ -59,19 +59,6 @@ export interface ValueProposition {
     readonly updatedAt: string;
 }
 
-export interface IndustryItem {
-    readonly id: string;            // e.g. 'ind_001'
-    readonly slug: string;
-    readonly title: string;
-    readonly description: string;
-    readonly icon: string;
-    readonly imageUrl: string;      // Generated image path
-    readonly imageAlt: string;
-    readonly displayOrder: number;
-    readonly isActive: boolean;
-    readonly createdAt: string;
-    readonly updatedAt: string;
-}
 
 export interface TechCategory {
     readonly id: string;            // e.g. 'tch_001'

@@ -46,6 +46,19 @@ export function TechCategoryCard({ category, className }: TechCategoryCardProps)
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onMouseEnter={handleMouseEnter}
+            onTouchStart={(e) => {
+                const touch = e.touches[0];
+                if (!touch || !cardRef.current) return;
+                setIsHovered(true);
+                const rect = cardRef.current.getBoundingClientRect();
+                setMousePosition({ x: touch.clientX - rect.left, y: touch.clientY - rect.top });
+            }}
+            onTouchEnd={() => {
+                setIsHovered(false);
+                if (cardRef.current) {
+                    cardRef.current.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                }
+            }}
             className={cn(
                 "tech-card group relative flex flex-col p-6 md:p-8 rounded-xl border border-white/5 bg-[#050505] overflow-hidden transition-all duration-300 ease-out",
                 className
@@ -54,16 +67,18 @@ export function TechCategoryCard({ category, className }: TechCategoryCardProps)
         >
             {/* Spotlight that follows mouse */}
             <div
-                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute -inset-px rounded-xl transition duration-300"
                 style={{
+                    opacity: isHovered ? 1 : 0,
                     background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,51,51,0.15), transparent 40%)`
                 }}
             />
 
             {/* Glowing Border Spotlight masking */}
             <div
-                className="pointer-events-none absolute inset-0 rounded-xl border border-transparent opacity-0 transition duration-300 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 rounded-xl border border-transparent transition duration-300"
                 style={{
+                    opacity: isHovered ? 1 : 0,
                     background: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255,51,51,0.8), transparent 40%) border-box`,
                     WebkitMask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
                     WebkitMaskComposite: 'xor',

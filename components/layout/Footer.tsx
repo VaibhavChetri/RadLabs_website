@@ -40,7 +40,6 @@ export function Footer() {
                         <Link href="#services" className="text-sm hover:text-white transition-colors duration-300">Services</Link>
                         <Link href="#capabilities" className="text-sm hover:text-white transition-colors duration-300">Capabilities</Link>
                         <Link href="#process" className="text-sm hover:text-white transition-colors duration-300">Process</Link>
-                        <Link href="#industries" className="text-sm hover:text-white transition-colors duration-300">Industries</Link>
                     </nav>
                 </div>
 

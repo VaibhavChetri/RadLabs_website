@@ -75,16 +75,52 @@ export function WhyUsClient({ children }: { children: ReactNode }) {
         };
     }, [prefersReducedMotion, hasRevealed]);
 
-    // 3D Hover Tilt effect (desktop only, skip on touch)
+    // 3D Hover Tilt effect (desktop) + subtle scale on touch (mobile)
     useEffect(() => {
         if (prefersReducedMotion || !containerRef.current) return;
 
-        // Skip tilt on touch devices
-        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-        if (isTouch) return;
-
         const cards = containerRef.current.querySelectorAll('.why-card');
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+        if (isTouch) {
+            // Touch devices: subtle scale-up on tap
+            const handlers: Array<{ el: Element; start: () => void; end: () => void }> = [];
+
+            cards.forEach(card => {
+                const inner = card.querySelector('.why-card-inner');
+                const onStart = () => {
+                    if (inner) {
+                        gsap.to(inner, {
+                            scale: 1.03,
+                            duration: 0.3,
+                            ease: 'power2.out'
+                        });
+                    }
+                };
+                const onEnd = () => {
+                    if (inner) {
+                        gsap.to(inner, {
+                            scale: 1,
+                            duration: 0.5,
+                            ease: 'elastic.out(1, 0.5)'
+                        });
+                    }
+                };
+
+                card.addEventListener('touchstart', onStart, { passive: true });
+                card.addEventListener('touchend', onEnd, { passive: true });
+                handlers.push({ el: card, start: onStart, end: onEnd });
+            });
+
+            return () => {
+                handlers.forEach(({ el, start, end }) => {
+                    el.removeEventListener('touchstart', start);
+                    el.removeEventListener('touchend', end);
+                });
+            };
+        }
+
+        // Desktop: full 3D tilt
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleMouseMove = (e: MouseEvent, card: any) => {
             const rect = card.getBoundingClientRect();

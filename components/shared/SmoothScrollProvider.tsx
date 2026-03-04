@@ -11,20 +11,27 @@ if (typeof window !== 'undefined') {
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
 
-    // Sync Lenis scroll with GSAP ScrollTrigger
-    useLenis((lenis) => {
+    // Sync every Lenis scroll frame with GSAP ScrollTrigger
+    useLenis(() => {
         ScrollTrigger.update();
     });
 
     useEffect(() => {
-        // Ensure ScrollTrigger uses Lenis for its internal calculations
-        gsap.ticker.add((time) => {
-            // we don't need to manually call lenis.raf here because ReactLenis handles it internally,
-            // but we do want to make sure GSAP ticker is synced with the browser paint.
-        });
+        // After Lenis mounts and the DOM settles, refresh all ScrollTrigger positions
+        const refreshTimeout = setTimeout(() => {
+            ScrollTrigger.refresh(true);
+        }, 250);
+
+        // Second refresh after fonts + images settle
+        const secondRefresh = setTimeout(() => {
+            ScrollTrigger.refresh(true);
+        }, 1000);
+
+        gsap.ticker.lagSmoothing(0);
 
         return () => {
-            gsap.ticker.remove(() => { });
+            clearTimeout(refreshTimeout);
+            clearTimeout(secondRefresh);
         };
     }, []);
 
@@ -33,7 +40,8 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
             lerp: 0.05,
             duration: 1.5,
             smoothWheel: true,
-            syncTouch: false // Crucial: false allows native mobile scroll to fire ScrollTrigger correctly
+            syncTouch: false,         // false = native touch scroll (most reliable for ScrollTrigger on mobile)
+            touchMultiplier: 1.5
         }}>
             {children}
         </ReactLenis>

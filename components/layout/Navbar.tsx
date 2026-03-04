@@ -17,7 +17,7 @@ export function Navbar() {
             setIsScrolled(window.scrollY > 50);
 
             // Simple intersection observer alternative for active section tracking
-            const sections = ['services', 'capabilities', 'process', 'why-us', 'industries', 'tech-stack', 'results', 'contact'];
+            const sections = ['services', 'capabilities', 'process', 'why-us', 'tech-stack', 'results', 'contact'];
             let current = '';
 
             for (const section of sections) {
@@ -53,7 +53,6 @@ export function Navbar() {
         { name: 'Services', href: '#services' },
         { name: 'Capabilities', href: '#capabilities' },
         { name: 'Process', href: '#process' },
-        { name: 'Industries', href: '#industries' },
     ];
 
     return (

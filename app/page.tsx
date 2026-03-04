@@ -5,7 +5,7 @@ import { Services } from '@/components/sections/Services';
 import { Capabilities } from '@/components/sections/Capabilities';
 import { Process } from '@/components/sections/Process';
 import { WhyUs } from '@/components/sections/WhyUs';
-import { Industries } from '@/components/sections/Industries';
+
 import { TechStack } from '@/components/sections/TechStack';
 import { Results } from '@/components/sections/Results';
 import { Contact } from '@/components/sections/Contact';
@@ -20,7 +20,7 @@ export default function Home() {
       <Capabilities />
       <Process />
       <WhyUs />
-      <Industries />
+
       <TechStack />
       <Results />
       <Contact />
